@@ -94,7 +94,7 @@
   []
   [K_O]
     type = GenericConstantMaterial
-    prop_values = '1'
+    prop_values = '0.01'
     prop_names = 'K_O'
   []
 []
@@ -116,7 +116,7 @@
   dtmin = 2e-18
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt = 1E-14
+    dt = 1E-1
   []
 []
 

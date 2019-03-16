@@ -1,3 +1,4 @@
+inactive = 'GlobalParams Distributions'
 [Mesh]
   type = GeneratedMesh
   dim = 1
@@ -18,7 +19,7 @@
   [C_R]
     order = FIRST
     family = LAGRANGE
-    scaling = 1E5
+    scaling = 1E1
     [InitialCondition]
       type = FunctionIC
       function = C_R_IC_funtion
@@ -94,7 +95,7 @@
   []
   [K_O]
     type = GenericConstantMaterial
-    prop_values = '0.01'
+    prop_values = '0.1'
     prop_names = 'K_O'
   []
 []
@@ -108,14 +109,14 @@
 
 [Executioner]
   type = Transient
-  num_steps = 300
+  num_steps = 1000
   solve_type = PJFNK
-  end_time = 1.2
+  end_time = 1.8
   dtmax = 0.5e-2
   line_search = basic
   [TimeStepper]
     type = IterationAdaptiveDT
-    dt = 1E-12
+    dt = 0.1
   []
 []
 
@@ -134,10 +135,10 @@
   # #####parameter#####
   E1 = '1.3'
   v = '1'
-  E0 = '1'
+  E0 = '0.85'
   [E]
     type = ParsedFunction
-    value = 'if(t<=0.6, ${E1}-${v}*t-${E0}, ${E1}+${v}*t-${E0}-2*${v}*0.6)'
+    value = 'if(t<=0.9, ${E1}-${v}*t, ${E1}+${v}*t-2*${v}*0.9)'
   []
   [C_R_IC_funtion]
     # Give C_R a small value to trigger the flux exchange
@@ -148,14 +149,14 @@
   []
   [Exp_1]
     type = ParsedFunction
-    value = 'if(t<=0.6, exp(-alpha*n*F*(${E1}-${v}*t-${E0})/R/T), exp(-alpha*n*F*(${E1}+${v}*t-${E0}-2*${v}*0.6)/R/T))' # 6.2.2 time dependent
+    value = 'if(t<=0.9, exp(-alpha*n*F*(${E1}-${v}*t-${E0})/R/T), exp(-alpha*n*F*(${E1}+${v}*t-${E0}-2*${v}*0.9)/R/T))' # 6.2.2 time dependent
     vars = 'n F R T alpha'
     vals = '1 96485 8.314 300 0.5'
   []
   [Exp_2]
     type = ParsedFunction
     vars = 'n F R T alpha'
-    value = 'if(t<=0.6, exp((1-alpha)*n*F*(${E1}-${v}*t-${E0})/R/T), exp((1-alpha)*n*F*(${E1}+${v}*t-${E0}-2*${v}*0.6)/R/T))'
+    value = 'if(t<=0.9, exp((1-alpha)*n*F*(${E1}-${v}*t-${E0})/R/T), exp((1-alpha)*n*F*(${E1}+${v}*t-${E0}-2*${v}*0.9)/R/T))'
     vals = '1 96485 8.314 300 0.5'
   []
 []
@@ -187,4 +188,10 @@
     type = FunctionValuePostprocessor
     function = E
   []
+[]
+
+[GlobalParams]
+[]
+
+[Distributions]
 []
