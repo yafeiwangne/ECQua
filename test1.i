@@ -1,4 +1,3 @@
-inactive = 'GlobalParams Distributions'
 [Mesh]
   type = GeneratedMesh
   dim = 1
@@ -133,9 +132,9 @@ inactive = 'GlobalParams Distributions'
 [Functions]
   # #####parameter#####
   # #####parameter#####
-  E1 = '1.3'
+  E1 = '1.4'
   v = '1'
-  E0 = '0.85'
+  E0 = '1'
   [E]
     type = ParsedFunction
     value = 'if(t<=0.9, ${E1}-${v}*t, ${E1}+${v}*t-2*${v}*0.9)'
@@ -188,10 +187,4 @@ inactive = 'GlobalParams Distributions'
     type = FunctionValuePostprocessor
     function = E
   []
-[]
-
-[GlobalParams]
-[]
-
-[Distributions]
 []
